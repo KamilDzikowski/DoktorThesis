@@ -1,0 +1,527 @@
+\chapter{Details of the calculations}
+
+\addtocontents{toc}{\contentsline
+{chapter}{Appendix: Details of the calculations}{\protect\pageref{annotation}}}
+
+	This chapter provides more details of the calculations performed throughout the main body of the thesis (in order of appearance).
+	
+\section{Details of solving the TFD model}
+
+ Section~\ref{sec:TF} describes how the TF model requires a numerical solution of a differential equation known as the TF equation. It has been known since at least 1954 \cite{gilvarry_relativistic_1954} that the relativistic version of this equation can be formally derived in an analogous way by starting from the Dirac Hamiltonian. The result, written in atomic units reads \cite{waber_relativistic_1975}
+  \begin{align} 
+    \chi''(x) = x^{-1/2}\left(\chi(x) + \frac{Z^}{b c^{2}} \chi'(x) \left(\chi(x) -\frac{1}{2} x \chi'(x)\right)\right)^{3/2}, \label{TFD}
+  \end{align}
+  where $c$ is the speed of light,
+  \begin{equation}
+      x = \frac{r}{b},\qquad \qquad b = \left(\frac{9 \pi^2}{128 Z}\right)^{1/3},
+  \end{equation}
+  and the dimensionless self-consistent potential $\chi(x)$ is related to the self-consistent potential of the TF model as
+  \begin{equation}
+      \phi(r) = Z \chi(x) - \phi_{0},
+  \end{equation}
+  with the constant $\phi_{0}$ determined from the normalization condition. For neutral atoms
+  $\phi_{0}$ equals zero.
+  
+  Equation~\eqref{TFD} will be referred to as the TFD equation. Note, that in the non-relativistic limit, i.e., when the speed of light tends to infinity, it reduces to the TF equation~\eqref{TFequation}.
+
+The boundary conditions for the TFD equation in the case of neutral atoms are given by \cite{waber_relativistic_1975}
+\begin{align}
+  \chi(0) = 1, \qquad \qquad \chi(\infty) = 0. \label{eq:19}
+\end{align}
+As mentioned in section~\ref{sec:TF}, in order to solve such equation,
+one needs to use the shooting method. This means reformulating the
+boundary value problem as an initial value one
+\begin{align}
+  \chi_{0} = 0, \qquad \qquad \chi'(0) = \mu, \label{eq:21}
+\end{align}
+and seeking a value of $\mu$ that leads to the correct behaviour at infinity. For this purpose the value of $x_c$ needs to be varied from some small value, to a very large one (80 was sufficient for our purposes), and looked for a value of $\mu$ that leads to $\chi(x_c)=0$. The case of the atoms presented in figure~\ref{Rel_rhoPlot}, results in
+\begin{align}
+  \mu_{\mathrm{Xe}} &= -1.50965873266, \qquad  \qquad \chi_{\mathrm{Xe}}(80) < 10^{-6}, \label{eq:22}
+  \\
+  \mu_{\mathrm{U}} &= -1.49103044294, \qquad  \qquad \chi_{\mathrm{U}}(80) < 10^{-6}. \label{eq:23}
+\end{align}
+The high precision required of the $\mu$ values means that this procedure can require significant computation time.
+
+In the case of ions the situation is slightly different. The boundary conditions take the form \cite{marini_relativistic_1981}
+\begin{align}
+  \chi(0) = 1, \qquad  \qquad  -x_{c}\chi'(x_{c}) = 1 - N/Z, \label{eq:20}
+\end{align}
+where $N$ is the number of electrons and $x_c$ is the value at which the potential reaches zero: $\chi(x_{c}) = 0$. A similar strategy to neutral atoms can be used here, however one needs to ``shoot'' from
+infinity. In this case the boundary value problem is already written
+as the initial value one
+\begin{align}
+  \chi(x_{c}) = 0, \qquad  \qquad \chi'(x_{c}) =
+  -\frac{1-N/Z}{x_{c}}, \label{eq:24}
+\end{align}
+and all that is required, is to vary the value of $x_{c}$, till the value
+of $\chi(0)$ becomes one. The two cases of HCI shown in figure~\ref{fig:HCI} give
+\begin{align}
+  x_{c}
+  &= 0.34635, \qquad  \qquad \chi(10^{-6}) \approx 1, \label{eq:25}
+  \\
+  x_{c}
+  &= 0.47890, \qquad  \qquad \chi(10^{-6}) \approx 1. \label{eq:26}
+\end{align}
+
+Finally, the density of the atom or ion is expressed through the
+self-consistent potential as
+  \begin{align}
+    \rho(r) = \frac{8\sqrt{2}}{3\pi} \left(\frac{Z
+    \chi(x)}{r} - \phi_{0}\right)^{3/2} \left(1 +
+    \frac{Z}{b c^{2}}
+    \chi'(x) \left(1 - \frac{x
+    \chi'(x)}{2\chi(x)}\right)\right)^{3/2}. \label{eq:27}
+  \end{align}
+
+\section{Details of the solving the hydrogen atom}
+\label{app:hydrogen}
+
+This section provides a more detailed derivation of the hydrogen-like wavefunctions within both Schr\"odinger and Dirac theories.
+
+\subsection{Schr\"odinger equation for hydrogen}
+
+In order to solve the Schr\"odinger equation for the hydrogen atom \eqref{SchSpher} one uses the ansatz
+\begin{equation}
+	\psi(r,\theta,\varphi) = R(r)Y(\theta,\varphi), \label{SchSplit}
+\end{equation}
+where both parts are required to be separately normalized
+\begin{equation}
+	\int R^2 r^2 dr = \int Y^2 \sin(\theta)d\theta d\varphi=1. \label{RYnorm}
+\end{equation}
+Moreover, since $Y$ is a function on the unit sphere, it also needs to be periodic
+\begin{equation}
+	Y(\theta,\varphi)=Y(\theta,\varphi+2\pi k)\qquad \text{for} \qquad k \in \mathbb{Z},
+\end{equation}
+and regular at the poles (as coordinate singularities should not cause physical singularities)
+\begin{equation} \label{Ycondition}
+	Y(\theta_0,\varphi)=const, \qquad \text{where} \qquad \theta_0 \in\{0,\pi\}.
+\end{equation}
+Using \eqref{SchSplit} splits \eqref{SchSpher} into the separate radial and angular equations:
+\begin{align} \label{Req}
+	\frac{d}{dr}\left(r^2 \frac{d R}{d r}\right)+2r(E r+Z)R &= A R, \\
+	(1-q^2) \partial_{q}^2 Y - 2q \partial_qY+\frac{1}{1-q^2} \partial^2_{\varphi} Y &= -A Y,\label{Yeq}
+\end{align}
+where $q = \cos(\theta)$ and $A$ is the separation constant.
+
+Let's first solve the angular equation. It is easy to see that the dependence on $\varphi$ is simple exponential that is traditionally indexed by a parameter $m$
+\begin{equation}
+    Y(q,\varphi) = e^{i m \varphi}Y(q) \qquad \implies \qquad (1-q^2) \partial^2_q Y-2 q\partial_q Y= \left(\frac{m^2}{q^2-1}-A \right) Y.
+\end{equation}
+The dependence on $q$ can be found by expanding $Y$ in a power series to obtain a recursion relation
+\begin{align}
+    &Y(q)=\sum_{i=0}a_iq^i \\
+    &(2i^2-m^2-A)a_i-(i+2)(i+1)a_{i+2} +(A-(i-1)(i-2))a_{i-2}=0.
+\end{align}
+In order for \eqref{Ycondition} to be satisfied the recursion must terminate, which happens whenever $A=l(l+1)$ for some integer $l\geq0$. This makes $Y$ a polynomial in $q$, called associated Legendre polynomial, denoted $P^m_l$ (see Appendix~\ref{app:Legendre}). Finally the angular solutions come out as
+\begin{equation}
+    Y^m_l(\theta,\varphi) = (-1)^m\sqrt{\frac{(2l+1)}{4\pi}\frac{(l-m)!}{(l+m)!}}P^m_l(\cos(\theta))e^{i m \varphi},
+\end{equation}
+where the normalization constant is chosen to satisfy \eqref{RYnorm}.
+
+In order to solve the radial equation, one uses the ansatz
+\begin{equation}
+R(r) = e^{-r\sqrt{-2E}}r^{l-1}g(2\sqrt{-2E}r).
+\end{equation}
+Plugging in \eqref{Req} it gives
+\begin{equation}
+    r\partial_{r}^2g+(2l+2-r)\partial_rg+\left(\frac{Z}{\sqrt{-2E}}-l-1\right)g=0,
+\end{equation}
+where the $A=l(l+1)$ value has been used. One can again expand a series in the powers of $r$ to get
+\begin{align}
+    &g(r)=\sum_{i=0}a_ir^i \\
+    &\left(\frac{Z}{\sqrt{-2E}}-l-1-i\right)a_i+(2l+2+i)(i+1)a_{i+1}=0.
+\end{align}
+The normalization condition \eqref{RYnorm} requires the recurrence to terminate. This happens when and only when
+\begin{equation} \label{RadCondition}
+    \frac{Z}{\sqrt{-2E}} = n,
+\end{equation} for dome natural number $n>l$. This is the principal quantum number and \eqref{RadCondition} gives the hydrogen spectrum \eqref{SchEnergy}. In that case the function $g$ is a polynomial, called Laguerre polynomial, defined by \eqref{Laguerre}. Finally the bound states come out as
+\begin{equation} %Check this
+	R_{n,l,Z}(r)=\sqrt{\frac{(n+l)!}{(n-l-1)!}}\frac{Z^{1/2}}{2 r n}\left(\frac{2 Z}{n} r\right)^l L_{n-l-1}^{2l+1}\left(\frac{2Z}{n}r \right),
+\end{equation}
+
+When the energy is not at a resonant value given by \eqref{RadCondition}, the radial equation has two general solutions:
+\begin{subeqeations}
+\begin{align} \label{generalR}
+   	R_{\nu,l,Z}&=\sqrt{\frac{(\nu+l)!}{(\nu-l-1)!}}\frac{\sqrt{Z}}{2 r \nu}M \left[\nu,l+\frac{1}{2},\frac{2Z}{\nu}r \right] \\
+	U_{\nu,l,Z}&=\sqrt{\frac{(\nu+l)!}{(\nu-l-1)!}}\frac{\sqrt{Z}}{2 r \nu}W \left[\nu,l+\frac{1}{2},\frac{2Z}{\nu}r \right],
+\end{align}
+\end{subeqeations}
+where $\nu = Z/\sqrt{-2E}$ and the functions $M$ and $W$ are the two kinds of Whittaker functions (see Appendix~\ref{app:Whittaker}).
+
+On the other hand, the free states, that is states with $E>0$, are required to satisfy $R(\infty) = e^{i k r}$ instead of are given by $\nu = -i/k$ and $E=k^2/2$. Note that this produces a discrete spectrum for $E<0$ and a continuous one for $E>0$, as expected.
+
+\subsection{Dirac equation for hydrogen}
+
+The relativistic case can be approached in an analogous way. Requiring the wavefunctions to be eigenvactors of the total momentum operator and the spin operator, leads to the ansatz~\cite{flugge_practical_1971}
+\begin{equation} \label{Diracwave}
+	\psi(r) = \left(\begin{matrix}g_{n_k,\kappa}(r) \Omega_{\kappa,m_j}(\theta,\varphi) \\ f_{n_k,\kappa}(r) \Omega_{-\kappa,m_j}(\theta,\varphi)\end{matrix}\right),
+\end{equation}
+This splits the Dirac equation for hydrogen into the radial and angular equations. The angular equation does not admit a simple form, but it can be solved, by simply using the properties of the angular momentum operator~\cite{flugge_practical_1971}. The result comes out as
+\begin{align}
+  \Omega_{\kappa,m}
+  (\theta,\varphi)= \left(
+    \begin{array}{c}
+      \sqrt{\frac{1}{2} - \frac{m}{2\kappa+1}}
+      Y_\kappa^{m-1/2}(\theta,\varphi)
+      \\
+      -\sqrt{\frac{1}{2} + \frac{m}{2\kappa+1}}
+      Y_\kappa^{m+1/2}(\theta,\varphi)
+    \end{array}
+  \right), \label{eq:29}
+\end{align}
+where $\kappa$ is the relativistic angular quantum number defined by~\eqref{eq:kappa}.
+
+The radial wavefunctions meanwhile satisfy the system of coupled equations:
+\begin{subeqeations}
+    \begin{align}
+	\partial_r g+\frac{1+\kappa}{r} g - i \left(\alpha \left(E+\frac{z}{r}\right)+c\right)f &=0 \\
+\partial_r f+\frac{1-\kappa}{r} f - i \left(\alpha \left(E+\frac{z}{r}\right)+c\right)g &=0 
+\end{align}
+\end{subeqeations}
+Plugging one into the other gives an equation of the same class as~\eqref{Req} which means that $f$ and $g$ can be written as combinations of the non-relativistic radial solutions. Using the notation of section~\eqref{sec:Dirachydro} the result becomes
+\begin{align} \label{fullRelR}
+\left(\begin{matrix}g_{n,\kappa,z}(r)  \\ f_{n,\kappa,z}(r)\end{matrix}\right) = N_{n,\kappa}\Big[s \left(\begin{matrix}\sqrt{\kappa+\gamma}  \\-\sqrt{\kappa-\gamma}\end{matrix}\right) &R_{n_k+\gamma,\gamma,\varepsilon z}(r) \nonumber \\
+-&i \rho \left(\begin{matrix}\sqrt{\gamma-\kappa}  \\\sqrt{\kappa+\gamma}\end{matrix}\right) R_{n_k + \gamma,\gamma-1,\varepsilon z}(r)\Big],
+\end{align}
+where the normalization constant comes out, as
+\begin{align*}
+  N_{n,\kappa}=\cfrac{1}{\sqrt{\left(\cfrac{2 \gamma}{\kappa \varepsilon} -1 \right)s^2+\rho^2}},
+\end{align*}
+where $E_{n,\kappa}$ is the energy of a bound state given by~\eqref{DiracEnergy}.
+
+It is worth mentioning here that for the convenience of presentation, the Dirac
+  wavefunctions have been expressed through the Schr\"odinger wavefunctions and not through more
+  commonly used hypergeometric functions~\cite{AS}. However, our definition in~\eqref{fullRelR} is completely equivalent to other representations commonly used in literature~\cite{flugge_practical_1971}.
+
+Furthermore, the relation between Schr\"odinger and Dirac wavefunctions given by~\eqref{fullRelR} is also valid for arbitrary energies, with $n \rightarrow \nu$ and can express the second solution of the radial equation under $R(r) \rightarrow U(r)$, which is particularly useful when dealing with the Coulomb Green's functions, allowing for a uniform treatment of RCGF and RCDGF.
+
+\section{Details of the leading-order calculation}
+\label{app:ECM}
+
+As shown in chapter~\ref{ch:ECM} the leading-order calculation reduces to evaluating two kinds of radial integrals:
+\begin{align}
+    T_{\lambda} =& \int \frac{|\psi_{\lambda}(r)|^2}{r} dr,
+    \\
+       T^{\lambda_3,\lambda_4}_{\lambda_1,\lambda_2}(k) =& \int \psi_{\lambda_1}(r_1)^* \psi_{\lambda_2}^*(r_2) \psi_{\lambda_3}(r_1) \psi_{\lambda_4}(r_2) \frac{\min[r_1,r_2]^k}{\max[r_1,r_2]^{k+1}} r_1^2 r_2^2 dr_1 dr_2,
+\end{align}
+with the angular part handled by the closed form formula~\eqref{3jInt}.
+
+In order to evaluate $T_{\lambda}$, note that for any natural number $a$, we have:
+\begin{subequations}
+\begin{align}
+  \int M_{a+b,b-1/2}(r) M_{a+b,b-1/2}(r) \frac{dr}{r} &= \frac{\Gamma(2b)^2 (a)!}{\Gamma(a+2b)}, 
+  \\
+  \int M_{a+b,b+1/2}(r) M_{a+b,b+1/2}(r) \frac{dr}{r} &= \frac{\Gamma(2b+2)^2 (a-1)!}{\Gamma(a+2b+1)},
+  \\
+  \int M_{a+b,b+1/2}(r) M_{a+b,b-1/2}(r) \frac{dr}{r} &= \frac{\Gamma(2b)\Gamma(2b+2) (a)!}{\Gamma(a+2b+1)},
+  \end{align}    
+\end{subequations}
+and using the general formula~\eqref{generalR} we get in the non-relativistic case
+\begin{equation}
+ \label{Aformula}
+   T_{\lambda} = \frac{Z^*}{n^2}.
+\end{equation}
+Similarly, using~\eqref{fullRelR} we get the relativistic case, as
+\begin{equation}%Intermediate step?
+    T_{\lambda} = \left(\frac{(\alpha Z^*)^2}{\gamma}+n_k\right)\left(\frac{\varepsilon}{n_k}\right),
+\end{equation}
+
+For the purpose of subset diagonalization the off-diagonal $T_{\lambda}$ integrals are also needed. In particular
+\begin{equation}
+     T_{\lambda_1,\lambda_2} =& \int \frac{\psi_{\lambda_1}(r)^*\psi_{\lambda_2}(r)}{r} dr,
+\end{equation}
+can be evaluated using:
+\begin{subeqeation}
+\begin{align}
+  \int M_{a_1+b,b-1/2}&(k_1r) M_{a_2+b,b-1/2}(k_2r) \frac{dr}{r} \nonumber
+  \\
+  &= \Gamma(2b) x^{b}y^{a_1+a_2+2b}{}_2F_1[-a_1,-a_2,2b,-x], 
+  \\
+  \int M_{a_1+b,b+1/2}&(k_1r) M_{a_2+b,b+1/2}(k_2r) \frac{dr}{r} \nonumber
+  \\
+  &= \Gamma(2b+2) x^{b+1}y^{a_1+a_2+2b}{}_2F_1[1-a_1,1-a_2,2b+2,-x],
+ \end{align}
+\end{subeqeation}
+where
+\begin{equation}
+    x=\frac{4k_1k_2}{(k_1-k_2)^2}\qquad\qquad y=\frac{|k_1-k_2|}{k_1+k_2},
+\end{equation}
+and ${}_2F_1$ is the Gauss hypergeometric function.
+
+Furthermore, in order to evaluate $T_{\nu_2,\nu_4}^{\nu_1,\nu_3}$, we
+employ the integral
+\begin{align}
+  \int_0^\infty e^{-\lambda r - \lambda' r'} r^q
+    {r'}^{q'} r_{<}^{p} r_{>}^{p'} dr dr' =& \int_0^\infty \int_r^\infty e^{-\lambda r - \lambda' r'} r^{q+p} {r'}^{q'+p'} dr' dr\nonumber
+    \\
+     &+ \int_0^\infty \int_{r'}^\infty
+    e^{-\lambda' r' - \lambda r} r^{q+p'} {r'}^{q'+p} dr dr'
+    \nonumber
+  \\
+  &~~~~=
+    u_{q+p+1}^{q'+p'+1}(\lambda',\lambda) +
+    u_{q'+p+1}^{q+p'+1}(\lambda,\lambda'). \label{eq:62}
+\end{align}
+where $u_a^b(\lambda,\lambda')$ is the generating integral of the Heaviside theta function, and as such can be evaluated using~\eqref{uGen} and~\eqref{uInteger}. Since in the case of bound states, the Whittaker functions can be expanded as a product of an exponential and a polynomial, the required integral becomes
+  \begin{align}
+   & \int
+    M_{a_1+b_1,b_1-1/2}(q_1 r) M_{a_2+b_2,b_2-1/2}(q_2 r) \nonumber
+    \\
+      &\mspace{50mu}\times M_{a_3+b_3,b_3-1/2}(q_3 r')M_{a_4+b_4,b_4-1/2}(q_4 r')
+      \frac{r_<^l}{r_>^{l+1}} dr dr' \nonumber
+    \\
+    &\mspace{50mu}=\sum_{i_1=0}^{a_1} \sum_{i_2=0}^{a_2} \sum_{i_3=0}^{a_3}
+      \sum_{i_4=0}^{a_4} T_{\vec{a},\vec{b},\vec{q}}(\vec{i})
+      \Big(u_{i_1+i_2+b_1+b_2+l+1}^{i_3+i_4+b_3+b_4-l}
+      \left(\frac{q_3+q_4}{2},\frac{q_1+q_2}{2}\right) \nonumber
+      \\
+      &\mspace{250mu}+ u_{i_3+i_4+b_3+b_4+l+1}^{i_1+i_2+b_1+b_2-l}
+      \left(\frac{q_1+q_2}{2},\frac{q_3+q_4}{2}\right)\Big),
+  \end{align}
+  where
+  \begin{align*}
+    T_{\vec{a},\vec{b},\vec{q}}(\vec{i}) =
+    \prod_{k=1}^4
+    \frac{\Gamma(2b_k)}{\Gamma(2b_k+i_k)}
+    (-1)^{i_k}q_k^{b_k+i_k}.
+  \end{align*}
+  The bold $\vec a$,
+  $\vec b$, $\vec q$ and $\vec i$ are lists of four values, i. e.,
+  $\vec a = \{a_{1}, a_{2}, a_{3}, a_{4}\}$ with similar expressions
+  for $\vec b$, $\vec q$ and~$\vec i$.
+	
+ \section{Details of the scattering factors calculation}
+  \label{app:scatter}
+  
+ This section presents the calculation of atomic scattering factors, as Fourier
+    transforms of electronic density
+  \begin{align}
+    f_{n_r,\kappa}(q,Z^*) = \int \rho_{n_r,\kappa} (r,Z^*) e^{i
+    \vec{q} \cdot \vec{r}} d \vec{r}. \label{eq:40}
+  \end{align}
+  Integrating out the angular dependence in~\eqref{densityFormula}, we get the
+  radial density as
+  \begin{align}
+    \rho (r,Z^*) = \sum_{\lambda}
+    |g_{\lambda}(r,Z^*)|^2+|f_{\lambda}(r,Z^*)|^2, \label{eq:39}
+  \end{align}
+  
+  Now, expanding the Dirac wavefunctions, as exponentials and polynomilas and using \cite{gradstejn_table_2009}
+  \begin{align}
+    \int e^{-\lambda r}r^{n-2} e^{i \vec{q} \cdot \vec{r}} d\vec{r} =
+    4\pi \Gamma(n) \frac{\sin(n
+    \tan^{-1}(\frac{q}{\lambda}))}{\sqrt{(\lambda^2+q^2)^n}},
+    \label{eq:42}
+  \end{align}
+  we get
+  \begin{align}
+    f_{n_r,\kappa}(q,Z^*)=& (N(2\gamma+1)\Gamma(2\gamma))^2 \nonumber
+    \\
+     &\times \left(
+    2\kappa (\kappa-\gamma) n_r^2\sigma_1 + 4(\kappa-\gamma) \rho n_r
+    \sigma_2 +
+    \frac{2\kappa}{\kappa+\gamma}\rho^2\sigma_3\right), \label{eq:41}
+  \end{align}
+  where
+  \begin{align*}
+    \sigma_{1}
+    &= \sum_{\substack{i=1\\j=1}}^{n_r} {{n_r-1}\choose{i-1}}
+    {{n_r-1}\choose{j-1}}
+    \frac{\Gamma(i+j+2\gamma)}{\Gamma(2\gamma+i+1)!
+    \Gamma(2\gamma+j+1)!} \xi_{i,j}(q,Z^*),
+    \\
+    \sigma_{2}
+    &= \sum_{\substack{i=1\\j=0}}^{n_r} {{n_r-1}\choose{i-1}}
+    {{n_r}\choose{j}} \frac{\Gamma(i+j+2\gamma)}{\Gamma(2\gamma+i+1)!
+    \Gamma(2\gamma+j)!} \xi_{i,j}(q,Z^*),
+    \\
+    \sigma_{3}
+    &= \sum_{\substack{i=0\\j=0}}^{n_r} {{n_r}\choose{i}}
+    {{n_r}\choose{j}}
+    \frac{\Gamma(i+j+2\gamma)}{\Gamma(2\gamma+i)!\Gamma(2\gamma+j)!}
+    \xi_{i,j}(q,Z^*),
+    \\
+    \xi_{i,j}(q,Z^*)
+    &= \frac{(-1)^{i+j}}{q} \sin\left((i+j+2\gamma)
+      \tan^{-1}\left(\frac{q}{2\chi Z^*}\right)\right) \left(\frac{2
+      \chi Z^*}{\sqrt{(2\chi Z^*)^2+q^2}}\right)^{i+j+2\gamma}.
+  \end{align*}
+  
+  \section{Details of the photoionization calculation}
+  \label{app:photo}
+  
+  This section presents the details of the calculation of
+  Eq.~\eqref{PICformula}.  Within the framework of the D-ECM, $\psi_f$ is described as a free-state solution to the Dirac equation, with energy $E$, momentum $p$ and efffective charge $Z^*$. It can be written compactly, as \cite{PhysRev.134.A898}
+  \begin{align}
+    \psi_{\rm{free}} =& \left(\begin{matrix}
+        g_{p,\kappa'} (r,Z^*)~~ \Omega_{\kappa',m'}
+        \\
+        f_{p,\kappa'} (r,Z^*)~~\Omega_{-\kappa',m'}
+      \end{matrix}\right) \nonumber
+      \\
+      &= \frac{1}{2\sqrt{p r}}
+    \frac{|\Gamma(1+\gamma+i \nu)|}{\Gamma(2\gamma+1)}
+    \left(\begin{matrix}\sqrt{1/\varepsilon+1} \text{Im}(\Psi (r,Z^*))~~
+        \Omega_{\kappa',m'}
+        \\
+        \sqrt{1/\varepsilon-1} \text{Re}(\Psi
+        (r,Z^*))~~\Omega_{-\kappa',m'} \end{matrix}\right),
+  \end{align}
+  with $\nu = Z^* \varepsilon/p$ and
+  \begin{equation}
+    \Psi (r,Z^*) =(1+i)\sqrt{\frac{\kappa - i Z^*/p}{\gamma-i \nu}}
+    e^{\pi/2 (\nu+i \gamma)} M_{1/2+i \nu,\gamma}(-2i p r).
+  \end{equation}
+  
+  Using the orthogonality
+  \begin{equation}
+    \int \xi_{\kappa,m}\xi_{\kappa',m'} d\Omega =
+    \frac{1}{2}\delta_{\kappa,\kappa'}\delta_{m,m'},
+  \end{equation}
+  equation~\eqref{PICformula} can be integrated to obtain the total
+  photoionization cross section, as
+  \begin{equation}
+    \sigma_{\mathrm{tot}} = \frac{\alpha p \varepsilon}{k} 4\pi
+    \sum_{\kappa',m'} \left|\vec{J}\right|^2,
+  \end{equation}
+  where
+  \begin{equation}
+    \vec{J} = 
+    \int\left(\begin{matrix}
+        g_{p,\kappa'}(r,Z^*)~~
+        \Omega_{\kappa',m'}
+        \\
+        f_{p,\kappa'}(r,Z^*)~~\Omega_{-\kappa',m'}
+      \end{matrix}\right)^{\dagger}\left(\begin{matrix}
+        0&&\vec{\sigma}
+        \\
+        \vec{\sigma}&&0
+      \end{matrix}\right)\left(\begin{matrix}
+        g_{n,\kappa}(r,Z^*)~~ \Omega_{\kappa,m}
+        \\
+        f_{n,\kappa}(r,Z^*)~~\Omega_{-\kappa,m}
+      \end{matrix}\right) d\vec{r},
+  \end{equation}
+  with different Pauli matrices {$\sigma$}corresponding to different
+  polarization directions. Directing the photon momentum along the
+  {\it{z}} axis of our coordinate system
+  ($\vec{e}^1, \vec{e}^2, \vec{k}$) and summing over photon
+  polarization states, we get~\cite{lifshitz1974relativistic}
+  \begin{equation}
+    \sum_{i,j,s} J^*_i J_j e_i^s e_j^s
+    =\frac{1}{2}\left(|\vec{J}|^2-\frac{(\vec{J} \cdot
+        \vec{k})(\vec{J^*} \cdot \vec{k})}{k^2}\right) =
+    \frac{|J_x|^2+|J_y|^2}{2} = |J_x|^2,
+  \end{equation}
+  where in the last step the symmetry of the
+  remaining two directions has been exploited. This means that the total
+  photoionization cross-section can be calculated as
+  \begin{align}
+    \sigma_{\mathrm{tot}} =& \frac{\alpha p \varepsilon}{k} 4\pi
+    \sum_{\kappa',m'} \Bigg|\int\left(\begin{matrix}
+          g_{p,\kappa'}(r,Z^*)~~ \Omega_{\kappa',m'}
+          \\
+          f_{p,\kappa'}(r,Z^*)~~\Omega_{-\kappa',m'}
+        \end{matrix}\right)^{\dagger}
+        \nonumber
+        \\
+        &\mspace{180mu}\times\left(\begin{matrix}
+          0&&\sigma_1
+          \\
+          \sigma_1&&0
+        \end{matrix}\right)\left(\begin{matrix}
+          g_{n,\kappa}(r,Z^*)~~
+          \Omega_{\kappa,m}\\f_{n,\kappa}(r,Z^*)~~\Omega_{-\kappa,m}
+        \end{matrix}\right)d\vec{r}\Bigg|^2.
+  \end{align}
+  
+  Now, using the orthogonality of spherical harmonics, one can
+  see that
+  \begin{equation}
+    \int\Omega^{\dagger}_{\kappa',m'}\sigma_1\Omega_{\kappa,m}
+    d\Omega=(\delta_{\kappa',\kappa} + \delta_{\kappa',-1-\kappa})
+    (\delta_{m',m+1} C_{\kappa',m'} D_{\kappa,m} + \delta_{m',m-1}
+    D_{\kappa',m'}C_{\kappa,m}),
+  \end{equation}
+  where $C_{\kappa,m}= \sqrt{\frac{1}{2} - \frac{m}{2\kappa+1}}$ and
+  $D_{\kappa,m} = \sqrt{\frac{1}{2} + \frac{m}{2\kappa+1}}$ are
+  numerical coefficients of spherical harmonics, see
+  Eq.~\eqref{eq:29}. This gives us
+  \begin{align}
+    &\left|\int\left(\begin{matrix}
+          g_{p,\kappa'}(r,Z^*)~~ \Omega_{\kappa',m'}
+          \\
+          f_{p,\kappa'}(r,Z^*)~~\Omega_{-\kappa',m'}
+        \end{matrix}\right)^{\dagger}\left(\begin{matrix}
+          0&&\sigma_1
+          \\
+          \sigma_1&&0
+        \end{matrix}\right)\left(\begin{matrix}
+          g_{n,\kappa}(r,Z^*)~~ \Omega_{\kappa,m}
+          \\
+          f_{n,\kappa}(r,Z^*)~~\Omega_{-\kappa,m}
+        \end{matrix}\right)d\vec{r}\right| \nonumber 
+    \\
+    &~~=J_{\kappa'}(\delta_{\kappa',-\kappa} +
+      \delta_{\kappa',-1+\kappa}) (\delta_{\kappa'm',m+1}
+      C_{\kappa',m'} D_{-\kappa,m} + \delta_{m',m-1} D_{\kappa',m'}
+      C_{-\kappa,m} \nonumber)
+    \\
+    &~~+I_{-\kappa'}(\delta_{-\kappa'\kappa} +
+      \delta_{-\kappa',-1-\kappa}) (\delta_{m',m+1} C_{-\kappa',m'}
+      D_{\kappa,m} + \delta_{m',m-1} D_{-\kappa',m'} C_{\kappa,m}),
+  \end{align}
+  where the radial integrals read:
+  \begin{equation}
+    \left(\begin{matrix}
+        I_{\kappa'}
+        \\
+        J_{\kappa'}
+      \end{matrix}\right)=\int \left(\begin{matrix}
+        g_{n,\kappa}(r,Z^*)~~ f^*_{p,\kappa'}(r,Z^*)
+        \\
+        f_{n,\kappa}(r,Z^*)~~g^*_{p,\kappa'}(r,Z^*)
+      \end{matrix}\right) r^2dr
+  \end{equation}
+  and can always be performed analytically within the ECM. Finally, the result comes out as
+  \begin{align}\label{eq:sigmaTot}
+    \sigma_{\mathrm{tot}} =& \frac{\alpha p \varepsilon}{k} 4\pi
+    \Big[\left|I_{-\kappa}\right|^2 A_{\kappa,\kappa} +
+    \left|J_{-\kappa}\right|^2 A_{-\kappa,-\kappa} \nonumber
+    \\
+    &+2\text{Re}(I_{-\kappa}^* J_{-\kappa}B_\kappa) +
+    \left|I_{\kappa+1}\right|^2 A_{-\kappa-1,\kappa} +
+    \left|J_{\kappa-1} \right|^2A_{\kappa-1,-\kappa}\Big],
+  \end{align}
+  where:
+  \begin{align}
+    &A_{\kappa,\kappa'} = \left|C_{\kappa,m+1}D_{\kappa',m}\right|^2
+      + \left|C_{\kappa',m} D_{\kappa,m-1}\right|^2 
+    \\
+    &B_\kappa = C_{\kappa,m+1} D_{\kappa,m} C_{-\kappa,m+1}
+      D_{-\kappa,m} + C_{\kappa,m} D_{\kappa,m-1} C_{-\kappa,m}
+      D_{-\kappa,m-1}.
+  \end{align}
+  
+  For the purpose of estimating the relevance of relativistic
+  corrections, one can take the low $p$ limit in \eqref{eq:sigmaTot} and
+  average over the $m$ quantum number to obtain a non-relativistic
+  formula
+  \begin{align}
+    \sigma_{\mathrm{tot}}=&\frac{4\pi^2 \alpha (Z^*)^2}{3 p \omega
+      (2l+1)} \Bigg(\frac{1}{l}\left|\int R_{n,l,Z^*}(r)R_{p,l-1,Z^*}(r)
+        r^2dr\right|^2 \\
+        &\mspace{100mu}+ \frac{1}{l+1}\left| \int R_{n,l,Z^*}(r)
+        R_{p,l+1,Z^*}(r)r^2dr\right|^2\Bigg),
+  \end{align}
+  or equivalently
+  \begin{align}
+    \sigma_{\mathrm{tot}}=&\frac{4\pi^2 \alpha}{3 p (2l+1)}
+    \left(1+\frac{E-E^0}{\omega}\right)\Bigg(l \left|\int
+        R_{n,l,z}(r) R_{p,l-1,z}(r)r^3dr\right|^2 \\
+        &\mspace{200mu}+ (l+1) \left|\int
+        R_{n,l,z}(r) R_{p,l+1,z}(r)r^3dr\right|^2\Bigg),
+  \end{align}
+  where $E$ and $E^0$ are the ionization energy and the \changeR{leading}-order
+  energy of the bound state wave function. For the case of $E=E^0$ it
+  reduces to the standard formula \cite{YEH19851}.

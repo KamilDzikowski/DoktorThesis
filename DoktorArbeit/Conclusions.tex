@@ -1,0 +1,52 @@
+\chapter{Conclusions and outlook}
+\addtocontents{toc}{\contentsline{chapter}{Conclusions and outlook}{\protect\pageref{annotation}}}
+\label{ch:Conclusions}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+We have investigated the accuracy and efficiency of the ECM and D-ECM in
+describing multi-electron atoms and ions. We have shown, that despite being extremely simple, the analytical approximations produced by the leading-order ECM and D-ECM nevertheless provide accuracy sufficient to obtain correct energy ordering of different electronic configurations, both in ground and excited states. They are also useful in approximating a wide range of other atomic properties. They provide accuracy no worse that $\sim 20\%$ in approximating electronic densities, scattering cross-sections and photoionization cross-sections, and can correctly reproduce the main features, such as electron density maxima coming from the shell structure. Moreover, the accuracy is independent of the number of electrons in an atom, with no more than $\sim 6\%$ error of the total energy for any neutral atom, and significantly better for HCI.
+
+We have also investigated the feasibility of an analytical calculation of second-order corrections. We have shown how the single-electron second-order corrections to energies and first-order corrections to electron densities can be performed analytically in both ECM and D-ECM, by finding generating integrals of the RCGF and RCDGF. These increase the accuracy of the energy calculation to below $\sim 1\%$ for all neutral atoms of the periodic table. We have also numerically evaluated the double-electron corrections to energy, that include the effects of electron-electron correlations, and shown that they correctly reproduce correlation-caused atomic properties, such as electron affinities.
+
+Finally, we have investigated the evaluation of other types of energy corrections within the D-ECM. In particular, those related to the Breit interaction, finite-nuclear-size and vacuum polarization. The accuracy is no worse than $ \sim 5 \%$ in the leading-order approximation in all of the above, even for atoms with a large number of electrons, and can be significantly improved, by evaluating the second-order corrections.
+
+We have shown that ECM is superior to the TF model in approximating both electronic wavefunctions and energies, already in the leading order. It also posses well-defined higher order corrections, that can be used to further increase it's accuracy, and can easily be incorporated, as an initial approximation of other methods, such as the HF method. We therefore expect that the ECM can replace the TF model for all applications were the latter is currently utilised.
+
+We would like to stress, that the introduction of the effective charge
+$Z^{*}$, instead of the usage of the nuclear charge $Z$,
+i.e. $Z^{*}\neq Z$, is exactly the key idea, that significantly
+increases the accuracy of the leading-order approximation,
+while rendering the complexity of all calculations low.
+
+
+Finally, we would like to emphasize that even though our analytical
+expressions are sometimes complex, all special functions in the
+presented calculations reduce to expressions containing gamma
+functions and/or elementary functions only. Therefore, all relevant
+evaluations of energies, electron densities and scattering factors can
+be performed without any numerical or convergence issues.
+
+\section{Outlook}
+			
+So far we have calculated ground state energies up to second order and the wave functions up to first order of perturbation theory. However, the ECM and D-ECM might just as easily be extended to higher orders. The third order energy correction is defined as a double series over intermediate states:
+\begin{equation}
+\Delta E^{(3)}_{\lambda} = \sum_{\sigma_1,\sigma_2 \neq \lambda}\frac{\langle \lambda |\widehat{W}| \sigma_1 \rangle \langle \sigma_1 |\widehat{W}| \sigma_2 \rangle \langle \sigma_2 |\widehat{W}| \lambda \rangle }{(E_\lambda - E_{\sigma_1})(E_\lambda - E_{\sigma_2})} - \langle \lambda |\widehat{W}| \lambda \rangle \sum_{\sigma} \frac{|\langle \lambda |\widehat{W}| \sigma \rangle|^2}{(E_\lambda - E_\sigma)^2}.
+\end{equation}
+			
+This can again be split into a single-electron and a double-electron part and evaluated with a pair of hydrogen Green's functions $G$ or double Green's functions $G^{(2)}$. It is worth investigating, whether the procedure outlined in chapter \ref{ch:IntGreen} allows for a fully analytical calculation of $\Delta E^{(3)}_{\mathrm{single}}$, with multiple convolution integrals over Whitaker functions to express $\Delta E^{(3)}_{\mathrm{double}}$.
+
+On the other hand, the derivatives of Dirac hydrogen-like wavefunctions presented in chapter~\ref{ch:IntGreen}, can be used to derive analytical approximations to atomic properties up to second order in Dirac theory. This will allow for improved accuracy off all results presented in chapters~\ref{ch:Applications} and~\ref{ch:Improvements}, especially in the high-$Z$ examples. Of particular interest is the calculation of transition probabilities outlined in section~\ref{sec:TP}, where the relativistic second-order expressions could be employed to study examples difficult to calculate with other methods, such as the Fe XVII and Ni XIX lines observed in solar corona~\cite{SolarIron}.
+			
+Furthermore, the leading-order
+approximation can easily be modified to include interactions with
+external fields. Since the ECM and D-ECM provides the analytic calculation of matrix elements, it is particularly suited for problems, where traditionally it is necessary to use large databases of numerical solutions obtained with indirect optimization procedures such as the HF method or estimational analytical models such as the semi-classical TF model. One such problem may be the time emission of the system, which is periodically driven with a strong field \cite{feranchuk_new_2002}. The Hamiltonian of such system is composed of three parts:
+	\begin{equation}
+	\widehat{H}(t) = 	\widehat{H}_a + \widehat{H}_{\rm{SF}}(t) + 	\widehat{H}_{\rm{QEM}} ,
+	\end{equation}
+	where $	\widehat{H}_{\rm{SF}}$ is the strong time-dependent classical field, and $H_{\rm{QEM}}$ is the vacuum electromagnetic field, interaction with which can be treated perturbatively.
+	
+	Another example might be the process of Bremsstrahlung, which is important for many areas, such as crystallography and approaching it with the HF method becomes inefficient for heavy atoms \cite{PhysRev93788}.
+	
+		Finally, we are working towards releasing a complete software package, capable of automated and efficient calculation of all observables of interest for many-electron atoms and ions (electron densities, scattering factors, ionization energies etc.). As previously mentioned, a first version capable of performing the calculations in the zeroth order is already available (https://github.com/tupos/effz), and we are working towards extending it to second order.

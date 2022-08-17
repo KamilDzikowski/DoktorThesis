@@ -1,0 +1,79 @@
+\chapter{Evaluating Hypergeometric Functions}
+
+\addtocontents{toc}{\contentsline
+{chapter}{Appendix: Evaluating Hypergeometric Functions}{\protect\pageref{annotation}}}
+
+	In this section we provide more technical details on evaluating the required hypergeometric functions, especially for the purpose of the convolution integral in the double-electron contribution to energy. It is generally difficult to find software capable of performing this accurately and efficiently, with all parameters being arbitrary complex numbers. One can use technical computing systems such as Mathematica, but these rely on arbitrary precission arithmetics, which is significantly less time-efficient, and details of the algorithms used are often not publicly available. For the purpose of producing the results presented here, we have written an original C++ library, designed specifically for the purpose of evaluating hypergeometric functions.
+	
+	\section{Confluent hypergeometric functions}
+	
+	Here we outline basic ideas used in developing our C++ library. First, let us note how the Whittaker functions appearing in the formula for hydrogen Green's function of arbitrary energy~\eqref{GreenESch} can be expressed by confluent hypergeometric functions \cite{AS}:
+	\begin{equation}
+M_{\kappa,\mu}(z) = e^{-\frac{z}{2}}z^{\mu + \frac{1}{2}}{_1F_1}(\mu-\kappa+\frac{1}{2},1+2\mu,z) ,
+	\end{equation}
+	\begin{equation}
+	W_{\kappa,\mu}(z) = e^{-\frac{z}{2}}z^{\mu + \frac{1}{2}}U(\mu-\kappa+\frac{1}{2},1+2\mu,z) .
+	\end{equation}
+
+	Kummer's confluent hypergeometric function is defined for arbitrary complex numbers by a power series expansion:
+		\begin{equation} \label{1F1}
+		_1F_1(a,b,z) = \sum_i \frac{(a)_i}{(b)_i} \frac{z^i}{i!} ,
+		\end{equation}
+where $(a)_i$ is a Pochhamer symbol defined, as:
+\begin{equation}
+(a)_i = a(a+1)(a+2)...(a+i) .
+\end{equation}
+
+The series expansion (\ref{1F1}) is used to evaluate the confluent hypergeometric function in the region of small $|z|$, provided that the imaginary part of $a$ is also small. However, it has to be noted that it diverges whenever $b$ is a negative integer. Furthermore, truncating this series at desired accuracy requires considering the magnitude of two subsequent terms (as has been noted in \cite{Pearson2017}).
+
+Confluent hypergeometric function satisfies the following differential equation (also referred to as confluent hypergeometric equation):
+		\begin{equation}
+		z \frac{d^2 w}{dz^2} + (b-z)\frac{dw}{dz} -a w = 0 ,
+		\end{equation}
+and can be defined as its solution analytic at $z=0$. The corresponding solution that diverges at 0 as $\propto z^{-a}$	is precisely the function $U(a,b,z)$.
+
+\section{Algorithms for evaluating ${_1F_1}$}
+		
+		As noted above the defining power series is not always the optimal way of evaluating the confluent hypergeometric function. For large values of $|z|$ it is much more efficient to use the asymptotic expansion given by \cite{hazewinkel1993encyclopaedia}:
+		\begin{equation}
+		_1F_1(a,b,z) = \sum_i \frac{(a)_i (1+a-b)_i}{(i+1)!} \frac{-1}{z^i} .
+		\end{equation}
+		This is however a divergent series and therefore special care needs to be taken when determining when it should be truncated. The simple investigation of relative magnitudes of each component shows that terms in this sum only get smaller, as long as the term number is smaller than the modulus of the argument ($i<|z|$) and so it is not correct to go beyond this point even if more accuracy is desired.
+			
+		Furthermore, to limit critical cancellation it is convenient to ensure that $\text{Re}(z)>0$ by using the linear Kummers transformation \cite{AS}:
+		\begin{equation}
+		_1F_1(a,b,z) = e^z {_1F_1}(b-a,b,-z)
+		\end{equation}
+		
+		The regime that causes the most problems is a large value of the imaginary part of $a$. There is however an approach that is often helpful in this case based on the expansion in terms of Bessel functions $J_{\nu}(z)$:		
+		\begin{equation}
+		_1F_1(a,b,z) = \Gamma(b) e^{\frac{z}{2}} 2^{b-1} \sum_i p_i(b,z) \frac{J_{b-1+j}(\sqrt{z(2b-4a)})}{[z(2b-4a)]^{\frac{1}{2}(b-1+j)}} ,
+		\end{equation}
+		where $p_n(a,x)$ is the nth Buchholz polynomial, defined in \cite{ABAD1999237}.
+		
+		Because of the oscillatory nature of Bessel functions, this approach should only be used when $|a|>|z|$. Otherwise, it is advantageous to revert to the original power series (\ref{1F1}).
+		
+		\section{Algorithms for evaluating U}
+	
+	The most straightforward way of evaluating the second confluent hypergeometric function is to relate it directly to {$_1F_1$}, by \cite{AS}:
+		\begin{equation} \label{U}
+		U(a,b,z) = \frac{\pi}{\sin(\pi b)}\frac{F(a,b,z)}{\Gamma(a-b+1)\Gamma(b)}-\frac{z^{1-b}}{\Gamma(a)\Gamma(2-b)!}F(1+a-b,2-b,z) ,
+		\end{equation}
+	which has to be understood as a limit if $a$ or $b$ are integers. When $b$ is a positive integer, the limit can be taken directly, to give:
+	\begin{equation}
+	U(a,b,z) = (-1)^a \frac{(a+b-1)!}{(b-1)!}{_1F_1(-a,b,z)} .
+	\end{equation}
+	
+		On the other hand, when $b$ is a negative integer, we make use of another one of Kummer's transformations:
+			\begin{equation}
+			U(a,b,z) = z^{1-b}U(1+a-b,2-b,z) ,
+			\end{equation}
+		to make it positive and subsequently apply (\ref{U}).
+		
+	Finally, when $a$ is a negative integer, we repeatedly use the recurrence relation:
+				\begin{equation}
+				U(a,b,z) = -(b-2(a+1)-z)U(a+1,b,z)-(a+1)(2+a-b)U(a+2,b,z) ,
+				\end{equation}
+				until it can be expressed in terms of values of $U$ with a positive $a$ parameter.
+						
+			Extensive comparison of the above and many other formulas for evaluating confluent hypergeometric functions for a wide range of complex parameters can be found in \cite{Pearson2017}.

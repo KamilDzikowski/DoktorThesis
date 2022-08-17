@@ -1,0 +1,115 @@
+\chapter{Introduction}
+\addtocontents{toc}{\contentsline{chapter}{Introduction}{\protect\pageref{annotation}}}
+
+\section{Atoms}
+
+Atoms (from ancient Greek $\alpha \tau o \mu o \varsigma$ meaning uncutable) are the building blocks of all chemical elements and among the most intensely studied systems in all of physics. Their existence has been speculated since antiquity~\cite{pullman2001atom}, but no testable atomic theory existed until the early 19th century, when the law of definite proportions was laid out in chemistry~\cite{dalton2010new} and the relation between thermodynamics of gases and statistical physics was realised~\cite{thomson1816annals}. The first experimental observation of atoms came in the form of discrete absorption lines in the solar spectrum~\cite{Wollaston1802, von1817bestimmung} that could later be connected to laboratory analysis of gases~\cite{Angstrom1862} to identify the signatures of specific chemical elements. Similar experiments, including those conducted in Heidelberg~\cite{KirchhoffBunsen, KirchhoffBunsen2}, led to the development of spectroscopy which to this day remains a primary tool of investigating physics at smallest scales~\cite{workman1998applied}.
+
+Theoretical understanding of the mechanics of atoms and the origin of their spectral lines was to prove more challenging. Despite the discovery of the electron in 1897 in cathode ray tube experiments~\cite{thomson1897xl}, early attempts remained purely empirical, such as the famous Rydberg formula for hydrogen~\cite{Balmer1885}. It wasn't until Rutherford showed in 1911 that most of the mass of any atom is concentrated in the positively charged nucleus~\cite{Rutherford1911},
+that physical models of the inner structure of atoms could be developed. The first successful one, was the model of hydrogen by Bohr~\cite{bohr1913constitution} and its subsequent extension by proper quantization of angular momentum by Sommerfeld~\cite{Sommerfeld1916}. Generalising these to multi-electron atoms only became possible in 1925 with the advent of modern quantum mechanics in the form of the Schr\"{o}dinger~\cite{1926PhRv28.1049S} and, later, Dirac equations~\cite{rspa.1928.0023}. The latter was a particularly significant development, as by requiring consistency with Einsteins theory of relativity~\cite{bjorken1964relativistic} it naturally incorporated the spin of the electron, which in turn explained~\cite{Uhlenbeck1925} the splitting of absorption lines in external field known as the Zeeman effect~\cite{zeeman1897xxxii}.
+
+The next important development came with the experimental discovery of the Lamb shift~\cite{PhysRev.72.241}, that is, an energy difference between states predicted by the Dirac equation to be degenerate, and its subsequent theoretical explanation within the theory of quantum electrodynamics
+(QED)~\cite{PhysRev.73.416}. %What is the explanation?
+The latter eventually lead to some of the most precise predictions in the history of physics, such as the value of the $g$-factor of the electron, which has been calculated~\cite{calculatedgfactor} and measured~\cite{PhysRevLett.97.030801} to below one-part-per-trillion accuracy. 
+
+To this day, atoms remain a vital tool in the study, both theoretically and experimentally, of quantum field theories~\cite{Rafelski2017}, light-matter interactions~\cite{Shafir2009} and determination of physical constants, such as the fine structure constant~\cite{PhysRevLett.97.030802, erratum}. However, despite great progress in their theoretical description, they represent some of the simplest and most evident examples of physical systems that lack analytical solutions. Only the smallest, hydrogen atom with its single electron orbiting the nucleus can be solved exactly, as a two-body problem within both Schr\"{o}dinger and Dirac quantum theories. Adding one more electron to create helium already makes it impossible, mirroring the inherent difficulty of three-body problems in other areas of physics. However, while a system of two planets orbiting a star may not have an analytic solution due to inherent chaos that prevents the existence of stable orbits, all helium atoms in the universe have exactly the same physical properties indicating the existence of some well-defined - even if too complex for us to express - solutions.
+
+ The computational complexity involved in describing multi-electron atoms can be visualized by considering the maximum amount of information contained in an arbitrary wavefunction. In general, an $n$-electron wavefunction in 3 dimesions is a function of $3n$ variables that can involve arbitrary correlations. This means that computational complexity increases exponentially with the number of electrons. For a simplified illustrative example, while the hydrogen atom can be numerically described on a 3D grid using 1 MB of data (50 points in each dimension with 2 bytes each - 1 for the real part and 1 for the imaginary part), this number goes up to 1 TB  for helium and 1 exabyte for Lithium, just to describe its three electrons. By the time we reach silicon with its 13 electron, the volume of the required hard drive exceeds $10^{40}$ sun volumes! \footnote{The author is greatful to Z. Harman for this example.}
+
+Since the advancement in computational power cannot on their own overcome those difficulties, approximate methods remain the primary tool.
+
+\section{Atomic calculations}
+
+In the early days of quantum mechanics, multi-electron atoms were described using empirical modifications to the Bohr model of hydrogen, such as quantum defects~\cite{Seaton_1983}, or Slater orbitals~\cite{slater_atomic_1930}, with empirical principles such as the Moseley's law~\cite{14786441308635052} remaining popular. 
+
+One of the first successful ideas for describing multi-electron atoms \textit{ab-initio}, that is, without experimental input, was the semi-classical Thomas-Fermi (TF) model. It was developed in 1927~\cite{1927PCPS2542T}, specifically as a method of approximating the distribution of electrons in an atom. The main idea is to look for electron density, rather than the wavefunction. If one can find a reasonable guess on the dependence of binding energy on the electron density (known as the density functional), then the form of the latter can be obtained by simply minimizing the energy. This effectively becomes a 1-dimensional problem (assuming the nuclear potential is spherically symmetric), rather than the 3n-dimensional problem of finding the multi-electron wavefunction.
+
+Despite being rather inaccurate in its original form and failing to reproduce shell structure of atoms or the molecular bonding, the model remained relevant due to its simplicity. In subsequent decades, increasingly sophisticated arguments~\cite{1927PCPS2542T} have refined the form of the kinetic energy functional, until in 1964 Kohn and Hohenberg showed that the ground state of any electronic system is uniquely determined by the corresponding electronic density~\cite{PhysRev.136.B864}. This laid the foundations for Density Functional Theory that has since found numerous applications, particularly in the study of solids. Despite its problems, the Thomas-Fermi model is still used in modern computer codes, for example for plasma simulations~\cite{ciricosta_direct_2012, starrett_thomas-fermi_2017, dyachkov_region_2016} where a large number of repeated evaluations of electronic density need to be performed.
+  
+Obtaining a more accurate description of multi-electron atoms required methods capable of approximating the entire multi-electron wavefunction. The most important insight was proposed already in 1927 by D. R. Hartree~\cite{hartree_1928}, who suggested to deal with the non-linear nature of the Schr\"{o}dinger equation by an iterative process. In 1935, it was reformulated into its modern form in terms of Slater determinants~\cite{rspa19350085}, known as the Hartree-Fock (HF) method, but didn't become popular until the advent of computers, as it requires comparatively intensive computations. The main idea is to make an initial guess on the shape of occupied atomic orbitals, and then use them to obtain an effective potential acting on each electron individually. This is then used to find a new improved orbital occupied by each electron. This process is repeated until the potential produced by the electrons is consistent with the one used to find their distribution. For this reason it is often referred to as the self-consistent field method.
+
+The Hartree-Fock procedure has since been refined to include effects of electron-electron correlation using a wide range of methods, known collectively as post-Hartree-Fock methods. These include configuration interaction~\cite{Tup2003OS} and coupled clusters~\cite{bostock_fully_2011} among others. %(what others?!).
+Many of them have been incorporated into various software packages such as GRASP2k~\cite{jonsson_new_2013, DYALL1989425} and FAC~\cite{FAC}, along with further corrections coming from quantum electrodynamics and improved nuclear models. Furthermore, methods based on the Hartree-Fock procedure can easily be adapted to solve a much broader class of problems, and so they have found widespread use in describing not only multi-electron atoms~\cite{fischer1977hartree}, but also molecules~\cite{puchalski_relativistic_2017, jensen2007introduction} and atomic nuclei~\cite{TARBUTTON19681}. However, in practice the HF method is still too computationally intensive for many practical applications and further approximations are often required - most importantly, the separate treatment of inner (core) and outer (valence) electrons~\cite{pseudopotentials}.
+
+After the Dirac equation was proposed in 1928, relativistic versions of both the Thomas-Fermi and Hartree-Fock methods have been developed. These are referred to as Thomas-Fermi-Dirac model (TFD) and Dirac-Hartree-Fock method (DHF) respectively.
+
+\section{Analytical methods of atomic calculations}
+
+One important feature of the methods described in the previous section, is that they rely heavily on numerical calculations and do not produce analytical expressions for observable atomic properties. For this reason, simple analytical models are still actively developed
+\cite{TATEWAKI201849, gomez_simple_2019, SimpleHey} for applications, where certain
+level of precision has to be sacrificed for improved computation time,
+such as in computational plasma physics~\cite{lee_model_1987, chung_flychk:_2005}, X-ray scattering and diffraction~\cite{hau2012high, feranchuk_new_2002} or crystallography~\cite{toraya_new_2016}. Most often these come in the form of semi-empirical models, such as
+those based on quantum defects of Rydberg atoms~\cite{foot2005atomic}, or screened hydrogen~\cite{hau2012high}.
+
+From a purely mathematical point of view, the main difficulty in describing multi-electron atoms is that the corresponding equations are non-linear, preventing the existence of closed-form solutions. Approximate analytical expressions can however be obtained using perturbation theory, which is a formal way of quantifying the difference between a complicated problem and a simplified, exactly solvable one. In the case of multi-electron atoms, one can solve the non-interacting problem (i.e. hydrogen-like) exactly and treat the electron-electron repulsion as a perturbation. This is often referred to as the $1/Z$ expansion, where $Z$ stands for the charge of the nucleus. A variational procedure for a numerical computation of coefficients for two-electron atoms within Schr\"odinger theory has been first developed by A. Hylleraas in 1930~\cite{1930ZPhy6209H}. In subsequent decades his approach was greatly refined, with over 300 orders of perturbation computed within Schr\"dinger theory \footnote{This approach doesn't generalize naturally to the Dirac theory, as it requires explicit dependence on nuclear charge.} for two-electron ions with high accuracy by 1990~\cite{PhysRevA.41.1247} .
+
+The main drawback of the the $1/Z$ expansion, is that analytical expressions for wavefunctions exist only in the zeroth order, which offers relatively low accuracy. At the same time the calculation of higher orders quickly becomes computationally expensive, especially for larger atoms. Both of these issues can be improved upon with the use of the recently developed~\cite{Skoromnik_2017} Effective Charge Model (ECM). Its main premise is an improvement of the convergence rate of the perturbation series by the introduction of a single variational parameter - the effective nuclear charge $Z^*$. The intuitive idea of an effective nuclear charge is based on the notion that
+electrons ``screen'' each other from the nucleus thus lowering the
+Coulomb attraction to some ``effective'' value. The numerical value of the effective charge can then be chosen for any electronic configuration in a way that speeds up the convergence of the perturbation series, thus greatly increasing the accuracy of the analytical zeroth-order approximation. 
+
+The idea of an effective nuclear charge resulting from electronic screening is itself not new. In fact, it was suggested by Slater already in 1930~\cite{slater_atomic_1930}. It was originally envisioned as a way of approximating multi-electron atoms by adjusting hydrogen-like wavefunctions of individual atomic orbitals according to a set of simple, empirically motivated rules. In subsequent decades the effective nuclear charges were adjusted from their original values proposed by Slater, in order to better reproduce experimental data, or results of numerical calculations. In the 1960s they were calculated for all orbitals of all neutral atoms by Clementi \textit{et al.}\cite{clementi1963atomic, clementi1967atomic}, by the best fit to the results of a HF-like self-consistent numerical method. These are however crucially distinct in both definition and numerical value, from the effective charge used in ECM. The latter is introduced in a mathematically rigorous way as a parameter of the model, with values determined purely from theoretical considerations, without any empirical input.
+
+In the context of the ECM, the introduction of effective charge means adjusting the basis set in which the perturabative calculation is performed i.e. the set of hydrogen-like functions. By keeping the value of $Z^*$ identical for all single-electron wavefunctions of a given electronic configuration, the hydrogen-like basis remains orthonormal and the perturbation series well-defined. Furthermore, it allows all higher orders of perturbation to be expressed in terms of the hydrogen-like Green's function, which has a known analytical closed form. Similar techniques have also been used successfully to deal with other computationally challenging systems, e.g. to obtain analytical approximations to eigenvalues of some non-hermitian Hamiltonians~\cite{articleOleg}.
+
+In this work, we show how the ECM can be used to obtain analytical approximations to both global and local atomic characteristics of all atoms and ions, in both ground and excited states. In particular, we investigate electronic densities, scattering factors, transition probabilities, ionization energies and photoionization cross-sections within both Schr\"odinger and Dirac theories. We show that the leading-order approximation is enough to obtain correct ordering of the energies of electronic configurations for all atoms of the periodic table. Furthermore, we investigate to what extent the accuracy can be improved, by the inclusion of higher order corrections to energies and wavefunctions.
+
+We emphasize again that our aim is to keep the ECM an \textit{ab-initio} theory, in contrast to many modern approximation schemes that contain parameters fitted to the results of HF calculations~\cite{Koga1997} or experimental data, such as the interpolation of
+X-ray measurements~\cite{genoni_can_2017}. It also means, that the ECM avoids a lot of the numerical problems associated with local minima of the parameter space, that can make the convergence of the semi-empirical methods dependent on starting conditions~\cite{PhysRevA36467}. At the same time it is much simpler and less computationally intensive than the standards methods used for high precision atomic calculations.
+
+Most importantly, contrary to the TF model and methods based on the HF procedure, all expressions for atomic characteristics calculated with the ECM are fully analytical. Therefore, we suggest that the ECM can replace the TF model in all applications requiring rapid computations, including as an initial approximation for the self-consistent field methods for which convergence is strongly dependent on the choice of the trial wavefunctions.
+
+\begin{table}
+    \centering
+    \begin{tabular}{l|ll}
+        Unit & Expression & Value in SI \\
+        \hline \hline
+        mass & $m_e$ & $9.1094 \times 10^{-31}$ kg\\
+        action & $\hbar$ & $1.0546 \times 10^{-34}$ Js \\
+        charge & $e$ & $1.6022 \times 10^{-19}$ C\\
+        permitivity & $1/k_e$ & $1.1127 \times 10^{-10}$ F/m\\
+        length & $a_0$ & $5.2918 \times 10^{-11}$ m \\
+        energy & $E_h$ & 27.211 eV \\
+        momentum & $\hbar/a_0$ & $1.9929 \times 10^{-24}$ kg m/s\\
+        electric dipole moment & $e a_0$ & $8.4784 \times 10^{-30}$ Cm\\
+        magnetic dipole moment & $e \hbar/m_e$ & $1.8548 \times 10^{-23}$ J/T \\
+        force & $\alpha^2 m_e c^2 /a_0$ & $8.2387 \times 10^{-8}$ N \\
+        time & $\hbar/(\alpha^2 m_e c^2)$ & $2.4189 \times 10^{-17}$ s \\
+        \hline
+    \end{tabular}
+    \caption{Some of the most relevant atomic units. Five significant figures are given, but in most cases many more digits are known~\cite{1959Natur1841559S}. $E_h$ denotes the Hartree energy.}
+    \label{tab:units}
+\end{table}
+
+\section{Outline}
+
+This thesis is organised in the following way. In chapter \ref{ch:Methods}, we discuss the theoretical framework and practical realisation of the Thomas-Fermi model, the Hartree-Fock method and the $1/Z$ perturbation expansion. In chapter \ref{ch:basics}, we outline the standard approach to solving the Schr\"odinger and Dirac equations for the hydrogen atom and provide all necessary formulas and definitions required for the consistency of subsequent chapters. In chapter \ref{ch:ECM}, we define the hydrogen-like basis set and present the leading-order relativistic and non-relativistic ECM approximation, along with the respective calculations of effective charge. In chapter \ref{ch:secondECM}, we show how the Coulomb and Dirac Green's functions can be used to derive all formulas expressing second-order corrections to the ECM, including those involving electron-electron correlation. In chapter \ref{ch:IntGreen}, we discuss the possibilities and limitations of the analytical and numerical evaluation of second-order corrections and outline the derivation of corresponding formulas related to the analytical integration of the Coulomb Green's function. This chapter is heavily based on the research we previously published as~\cite{Dzikowski_2020}. In chapter \ref{ch:Applications}, we discuss the accuracy of the ECM by evaluating analytical approximations to a wide range of properties of atoms and ions and compare the results to the TF and HF methods. Both this chapter, as well as chapter~\ref{ch:ECM}, present research we previously published in~\cite{Dzikowski_2021}. In chapter \ref{ch:Improvements}, we show that the leading-order ECM can be used to accurately estimate the most important QED and nuclear corrections to atomic energies. In particular, those related to the Breit interaction, finite-nuclear-size effect, and vacuum polarization. In chapter \ref{ch:Conclusions}, we provide conclusions and outlook.
+
+Larger data tables, as well as the details of derivations of analytical formulas and algorithms used in numerical computations, can be found in the Appendix.
+
+\section{Units and abbreviations}
+
+Atomic units are employed throughout this work. This means that the reduced Planck constant, elementary charge, electron mass and the Coulomb constant are set to unity:
+\begin{align*}
+    \hbar = 1,\\
+    e = 1,\\
+    m_e = 1, \\
+    k_e = 1.
+\end{align*}
+Note that this also makes the Bohr radius equal to unity: $a_0=1$ and the speed of light becomes equal to the inverse of the fine structure constant $c= \frac{1}{\alpha} \approx 137.036$. The translation to SI units is given in table \ref{tab:units}. 
+
+Major abbreviations used throughout this thesis:
+\begin{align*}
+   \rm{ECM} &- \text{effective charge model}\\
+   \rm{D}\text{-}\rm{ECM} &- \text{relativistic effective charge model} \\
+    \rm{HF} &- \text{Hartree-Fock}\\
+    \rm{DHF} &- \text{Dirac-Hartree-Fock}\\
+    \rm{TF} &- \text{Thomas-Fermi} \\
+    \rm{TFD} &- \text{Thomas-Fermi-Dirac} \\
+    \rm{CI} &- \text{configuration interaction} \\
+    \rm{DFS} &- \text{Dirac-Fock-Sturm} \\
+    \rm{HFS} &- \text{Hartree-Fock-Slater} \\
+    \rm{RCGF} &- \text{reduced Coulomb Green's function} \\
+    \rm{RCDGF} &- \text{reduced Coulomb-Dirac Green's function} \\
+    \rm{HCI} &- \text{highly charged ions}
+\end{align*}
+

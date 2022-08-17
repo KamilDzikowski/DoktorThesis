@@ -1,0 +1,114 @@
+% Dokumentenkonfiguration
+\documentclass[a4paper,twoside,11pt,normalheadings,headsepline,footsepline,pointlessnumbers]{scrbook}
+%\documentclass[a4paper,12pt,normalheadings,headsepline,footsepline,pointlessnumbers]{scrbook}
+\usepackage{graphicx,amsfonts,bbm,makeidx,cite,amsmath}
+\usepackage{dcolumn,ltxtable,url}
+\usepackage[latin1]{inputenc}
+\usepackage[german,english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{epsfig}
+\usepackage{subeqnarray}
+\usepackage{upgreek}
+\usepackage{afterpage}
+\usepackage{color}
+\usepackage{maybemath}
+
+\usepackage{subfig}
+\usepackage{pdfpages}
+\usepackage{etaremune}
+
+\usepackage[pdfpagelabels,hypertexnames=false]{hyperref}%hyprlinks in der pdf
+
+%LaTeX Konfiguration
+\setlength{\itemsep}{100pt}
+\newcommand{\graphsize}{12cm}
+\newcommand{\smallgraphsize}{6cm}
+\let\onlinecite=\cite
+\makeindex
+
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%
+
+\tableofcontents
+
+Read:
+
+- Accurate Relativistic Calculations Including QED
+Contributions for Few-Electron Systems
+
+To do list:
+
+-I vs We
+
+-show the integration contour for G2
+
+- Make all graphs tik/gnuplot
+
+- References
+
+- Make tables roman and left-adjusted
+
+-numbering of figures and tables clickable
+
+-Add lots of atomic units with lots of digits
+
+- dots, commas and no new lines after equations
+
+- umlaut in Schrodinger
+
+- Check spelling
+
+\include{Introduction}
+%2
+
+\include{Methods}
+%2
+
+\include{definitions}
+%3
+
+\include{ECM}
+%2
+
+\include{SecondOrder}
+%2
+
+\include{IntGreen}
+%1
+
+\include{Applications}
+%1
+
+\include{Breit}
+%2
+
+\include{Conclusions}
+%1
+
+\include{Data}
+%0.5
+
+\include{EvaluatingHypergeometricFunctions}
+%4
+
+\include{Details}
+%1
+
+\end{document}
+
+%1 - written roughly/coppied
+%2 - written in a thoughtfull/original way
+%3 - inlcudes input from Natalia
+%4 - more or less in a final form
+%5 - finished

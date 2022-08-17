@@ -1,0 +1,145 @@
+% Dokumentenkonfiguration
+\documentclass[a4paper,twoside,11pt,normalheadings,headsepline,footsepline,pointlessnumbers,aps,showpacs,showkeys,prd,superscriptaddress,byrevtex]{scrbook}
+%\documentclass[a4paper,twoside,11pt,normalheadings,headsepline,footsepline,pointlessnumbers]{revtex4-1}
+%\documentclass[a4paper,12pt,normalheadings,headsepline,footsepline,pointlessnumbers]{scrbook}
+\usepackage{graphicx,amsfonts,bbm,makeidx,cite,amsmath}
+\usepackage{dcolumn,ltxtable,url}
+\usepackage[latin1]{inputenc}
+\usepackage[ngerman,english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{epsfig}
+\usepackage{subeqnarray}
+\usepackage{upgreek}
+\usepackage{afterpage}
+\usepackage{color}
+\usepackage{maybemath}
+\usepackage{changepage}
+\usepackage{doi}
+\usepackage[square,numbers]{natbib}
+\bibliographystyle{apsrev4-1}
+\usepackage[titletoc]{appendix}
+
+\usepackage{subfig}
+\usepackage{pdfpages}
+\usepackage{etaremune}
+\usepackage[pdfpagelabels,hypertexnames=false]{hyperref}%hyprlinks in der pdf
+
+% Curriculum vitae Konfiguration
+% \usepackage[NoDate]{currvita}
+% \renewcommand{\cvlistheadingfont}{\sffamily\bfseries\Large}
+% \renewcommand{\cvlabelfont}{\itshape}
+% \AtBeginDocument{\setlength{\cvlabelwidth}{54mm}}
+
+% Koma Script Konfiguration
+\areaset[18mm]{14cm}{26cm}              % A4 paper and letter paper      
+\deffootnote[1em]{1em}{1em}{\textsuperscript{\normalfont\thefootnotemark}}
+\setcapindent{0pt}
+\renewcommand\bibname{References}
+\renewcommand{\capfont}{\small\sffamily}
+% \renewcommand{\caplabelfont}{\small\sffamily\bfseries}
+\renewcommand{\caplabelfont}{\small\sffamily}
+\renewcommand{\headfont}{\sffamily\large}
+% \renewcommand{\pnumfont}{\sffamily\bfseries\large}
+\renewcommand{\pnumfont}{\sffamily\large}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+
+% dcolumn Konfiguration
+\newcolumntype{d}{D{.}{.}{-4}}
+
+% Picture Konfiguration
+\setlength{\unitlength}{1cm}
+
+% LaTeX Konfiguration
+\setlength{\itemsep}{100pt}
+\newcommand{\graphsize}{12cm}
+\newcommand{\smallgraphsize}{6cm}
+%\newcommand{\href}[2]{\url{#2}}
+\let\onlinecite=\cite
+\makeindex
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%
+\frontmatter
+\input{titlepage}
+\cleardoublepage
+\input{abstract}
+\cleardoublepage
+\mainmatter
+
+\tableofcontents
+
+\include{Preface}
+
+\include{Introduction}
+
+\include{Methods}
+
+
+\include{definitions}
+
+
+\include{ECM}
+
+
+\include{SecondOrder}
+
+
+\include{IntGreen}
+
+
+\include{Applications}
+
+
+\include{Breit}
+
+\include{Conclusions}
+
+\begin{appendices}
+
+\include{Data}
+
+\include{Details}
+
+\include{Specials}
+
+\include{EvaluatingHypergeometricFunctions}
+
+\end{appendices}
+
+%\bibliographystyle{unsrt}
+%\bibliographystyle{aipnum4-1}
+%setcitestyle{numbers,square}
+%\usepackage[sort&compress,numbers]{natbib}
+%\bibliographystyle{apsrev4-1}
+%\usepackage{doi}%<----------
+%\usepackage{hyperref}
+
+%\usepackage{hyperref}
+
+%\bibliographystyle{apsrev4-1}
+%\bibliographystyle{aipnum4-1}
+
+%\usepackage[square,numbers]{natbib}
+%\bibliographystyle{apsrev4-1}
+%\setcitestyle{numbers}
+
+\bibliography{Thesis.bib}
+
+\include{Acknowledgement}
+
+\end{document}
+
+
+%1 - written roughly/coppied
+%2 - written in a thoughtfull/original way
+%3 - inlcudes input from Natalia
+%4 - more or less in a final form
+%5 - finished
+%6 - corrected commas/grammar

@@ -1,0 +1,250 @@
+\chapter{Analytical evaluation of second-order corrections}
+\addtocontents{toc}{\contentsline{chapter}{Analytical evaluation of second-order corrections}{\protect\pageref{annotation}}}
+\label{ch:IntGreen}
+
+Formulas presented in the previous section may be sufficient for numerical evaluation of the second-order corrections, provided one is careful in avoiding the numerical instabilities in evaluating the limit in~\eqref{Glimit}. However, since our main aim is the derivation of analytical approximations, we need to investigate ways of performing the radial integration analytically. 
+
+\section{Closed form of the reduced Coulomb Green's function}
+
+Following Johnson and Hirschfelder~\cite{JandH} we turn the limit in~\eqref{Glimit} into a derivative
+\begin{align}
+    \tilde{G}_n &= \lim_{\delta \rightarrow 0} G_{E_n+i \delta} - \frac{|\psi_n \rangle \langle \psi_n|}{i \delta}
+    %\nonumber \\
+    %&= \left[G_E-E_n\partial_E G_E\right|_{E=E_n} = \left[\partial_E (E-E_n)G_E\right|_{E=E_n}.
+    = \left[\partial_E (E-E_n)G_E\right|_{E=E_n}.
+    \label{Gderiv}
+\end{align}
+Since the hydrogen Green's function can be expressed in terms of hydrogen bound states according to~\eqref{GreenESch} and~\eqref{GreenEDirac}, and the energy is only dependent on the principal quantum number $n$, all that is required are the derivatives of the functions $R_{n,l,Z}(r)$ and $U_{n,l,Z}(r)$ over the first parameter. Differentiating the corresponding infinite series representation\footnote{A general series representation can be obtained by using~\eqref{WhittakerDefEq} to expand~\eqref{generalR}.} gives
+\begin{align}
+\partial_{\nu} R_{\nu,l,Z}(r)|_{\nu=n} =& \sqrt{Z(n+l)!(n-l-1)!}2\frac{(-1)^l}{n^2 \lambda} \nonumber
+\\
+\times&\Bigg[(-1)^l\sum_{i=-l}^l(\lambda)^i \frac{(l-i)!}{(l+i)!}\left(e^{\lambda/2}\frac{(n+i-1)!}{(n+l)!(n-l-1)!} -\frac{e^{-\lambda/2}}{(n-i)!}\right) \nonumber 
+\\
+&+\sum_{i=l+1}^n(-\lambda)^i\left(e^{\lambda/2} B_i- e^{-\lambda/2} \frac{A_i+\frac{\lambda}{2} C_i+\log(\lambda)-\rm{Ei}(\lambda)}{(l+j)!(n-j)!}\right)\Bigg],
+\\
+\partial_{\nu} U_{\nu,l,Z}(r)|_{\nu=n} =& -\sqrt{Z(n+l)!(n-l-1)!}2\frac{e^{-\lambda/2}}{n^2 \lambda}
+\Bigg[\sum_{i=-l}^l(\lambda)^i \frac{(l-i)!}{(n-i)!(l+i)!} \nonumber 
+\\
+&\mspace{100mu}-(-1)^l\sum_{i=l+1}^n(-\lambda)^i\frac{A_i+\frac{\lambda}{2} C_i+\log(\lambda)}{(l+j)!(n-j)!}\Bigg],
+\end{align}
+where $\lambda=2Zr/n$ and we have defined the numerical coefficients:
+\begin{align}
+  A_i &=\frac{\Psi(n-l)+\Psi(n+l+1)}{2}-\Psi(i-l)-\Psi(l+i+1)-\frac{l+2}{n},
+  \\
+  B_i &= \sum_{j=i}^{n-1}\frac{(-1)^{j+i} (j-i)!}{(j-l)!(j+l+1)!(n-j-1)!},
+  \\
+  C_i &= \frac{1-i+l+2n}{n(i+l+1)},
+\end{align}
+using the polygamma function $\Psi(x)$, defined as
+\begin{equation}
+    \Psi(x) = \partial_x \log(\Gamma(x)).
+\end{equation}
+
+\begin{table}[b]
+      \centering
+    \begin{tabular}{cccc|ccc}
+         $n$ & $l$ & $q$ & $q'$ & Analytic time & Numeric time & $\delta$\\
+        \hline
+        \hline
+    3 & 1 & 2 & 0 & 8$\times 10^{-3}$ s & 3.83 s & $10^{-4}$\\
+    7 & 5 & 4 & 1 & 0.128 s & 2.39 s & $10^{-4}$\\
+    16 & 15 & 10 & 10 & 0.188 s & NaN & NaN\\
+    37 & 1 & 1 & 0 & 8.38 s & 39.6 s & $10^{-7}$\\
+    \hline
+    \end{tabular}
+  \caption{Comparison of computational times of the generating
+    integral of the RCGF given by~\eqref{GnSchr} for different values of the parameters $n$, $l$, $q$ and
+    $q'$ of analytical expressions~\cite{Dzikowski_2020} with the direct numerical integration using Mathematica~\cite{Mathematica}. The last column shows the value of $\delta$
+    required to obtain results accurate to four significant
+    figures. NaN means that the integral did not converge to the
+    correct value for any value of $\delta$.}\label{tab:GIntTime}
+\end{table}
+
+Plugging those derivatives into~\eqref{Gderiv} produces a closed form of the RCGF
+\begin{equation}
+  G_{nl}(r_1,r_2) = \frac{4Z}{n} \frac{(n-l-1)!}{(n+l)!}
+  \left(G_{nl}^{(\mathrm{sg})}(r_1,r_2) +
+  G_{nl}^{(\mathrm{nsg})}(r_1,r_2)\right), \label{eq:68}
+\end{equation}
+where $G^{(\mathrm{sg})}_{nl}$ contains all terms that are singular
+around the origin and $G^{(\mathrm{nsg})}_{nl}$ those that are not
+\begin{align}\label{GnSchr}
+  G_{nl}^{(\mathrm{sg})}(r_1,r_2)
+  = &(-1)^{l}e^{\frac{-\lambda_1-\lambda_2}{2}} \sum_{i_1=l}^{n-1} \sum_{i_2=1-l}^{1+l}
+    \beta{i_1}  \frac{(l+i_2-1)!}{(l+1-i_2)!}\nonumber
+  \\
+  &\times \left[\frac{(n-i_2)!}{(n-l-1)!}e^{\lambda_<}
+    \frac{\lambda_>^{i_1}}{\lambda_<^{i_2}} - \frac{(n+l)!}{(n-1+i_2)!}
+    \left(\frac{\lambda_1^{i_1}}{\lambda_2^{i_2}} + \frac{\lambda_2^{i_1}}{\lambda_1^{i_2}} \right)
+    \right],
+  \\
+  G_{nl}^{(\mathrm{nsg})}(r_1,r_2)
+  = -&e^{\frac{-\lambda_1-\lambda_2}{2}}\sum_{i_1=l}^{n-1} \sum_{i_2=l}^{n-1}
+    \beta_{i_1}\beta{i_2}
+    \Big[(i_2-l)!(i_2+l+1)!B_{i_2}\lambda_>^{i_1}\lambda_<^{i_2}e^{\lambda_<}
+     \nonumber
+  \\
+  &- \lambda_1^{i_1} \lambda_2^{i_2} \left(\log\left(\lambda_>\right) - \rm{Ein}\left(\lambda_<\right) + A_{i_1}(\lambda_1)+A_{i_2}(\lambda_2)+C \right)\Big],
+\end{align}
+where $\lambda=2Zr/n$, Ein(x) is the Einstein function (see Appendix~\ref{app:Ein}) and we have defined:
+\begin{align}
+  A_{i}(x) &= \frac{2n+l-i}{i+l+2}\frac{x}{2n}- \Psi(1+i-l)- \Psi(2+i+l), \label{eq:21}
+  \\
+  B_{i}&=\sum_{k=1}^{n-i-1}
+    \frac{(n-i-1)!(-1)^{k}(k-1)!}
+    {(k+i-l)!(k+i+l+1)!(n-i-k-1)!},
+    \\
+    C&=-\frac{4l+5}{2n} + \Psi(n+l+1) + \Psi(n-l)-\gamma,
+    \\
+    \beta_i &= (-1)^i\frac{(n+l)!}{(n-i-1)!(l+i+1)!(i-l)!},
+\end{align}
+where the Euler-Mascheroni constant is $\gamma \approx 0.57722$.
+As expected this is equivalent to the form originally found by Johnson and Hirschfelder~\cite{JandH}.
+
+\begin{table}[b]
+       \centering
+    \begin{tabular}{ccc|ccc}
+         $n$ & $l$ & $q$ & Analytic time & Numeric time & $\delta$\\
+        \hline
+        \hline
+    1 & 0 & 0 & 0.19 s & 21.7 s & $10^{-4}$ \\
+    2 & 4 & 3 & 0.01 s & 32.2 s & $10^{-4}$ \\
+    5 & 4 & 7 &  3.89 s & 68.1 s & $10^{-5}$ \\
+    6 & 8 & 8 &  0.05 s & 53.5 s & $10^{-6}$ \\
+    \hline  \end{tabular}
+  \caption{Comparison of computational times of the integral moments~\eqref{Gmoment}
+    for different values of parameters $n$, $l$, $q$ and $\lambda$ of
+    analytical expressions from~\cite{Dzikowski_2020} with the direct numerical integration of  using
+    Mathematica~\cite{Mathematica} at 100 different values of $x$.
+    The last column shows the value of $\delta$ required to obtain the
+    results accurate to four significant figures.}\label{tab:2}
+\end{table}
+
+\section{Integrating the Reduced Coulomb Green's function}
+
+The generating integral of the RCGF
+\begin{equation}\label{GenerateG}
+    K_{nl}(\lambda, \lambda') = \int e^{-\lambda x - \lambda' x'} G_{nl}(x,x')x^{q} x'^{q'} dx dx',
+\end{equation}
+is convergent for $q \geq 0$ and $q' \geq 0$. The main difficulty in performing such integration analytically is the fact, that integrals of individual terms in~\eqref{GnSchr} may not converge, even though the full integral~\eqref{GenerateG} converges overall. For this reason, the strategy
+employed in our work~\cite{Dzikowski_2020} was to first derive expressions valid for
+non-integer values of $q$ and $q'$, then find the Laurent series of
+\eqref{GenerateG} around $q = m + \delta$,
+$q' = m' + \delta$, where $m$ and $m'$ are non-negative integers and
+finally show that for $q,q'\geq0$ the divergent parts (terms
+proportional to $\delta^{-1}$ and $\delta^{-2}$) always vanish.
+
+This is done most conveniently by expressing the integral in terms of the generating integrals of the Heaviside step function
+\begin{align}
+   u_{a}^{b}(x,y) =&\int_0^\infty \int_0^\infty e^{-\lambda r - \lambda' r'} r^{a-1}
+  {r'}^{b-1} \theta(r'-r)dr' dr \nonumber
+  \\
+  &= \int_0^\infty \int_r^\infty e^{-\lambda r - \lambda' r'} r^{a-1}
+  {r'}^{b-1} dr' dr,
+\end{align}
+convergent whenever $\text{Re}(a)>0$, $\text{Re}(a + b) >0$ and
+$\text{Re}(\lambda + \lambda') > 0$. In general it is given by
+\begin{align} 
+  u_{a}^{b}(x,y) =
+  \sum_{i=0}^\infty \frac{\Gamma(a+b+i)}{(a+i)x^{a+b+i}}
+  \frac{(-y)^i}{i!}. \label{uGen}
+\end{align}
+
+In the case when $a$ and $b$ are positive integers it simplifies to a finite sum
+\begin{align} 
+  u_{a}^{b} (x,y) = \frac{\Gamma(a)}{y^a} \left(\frac{\Gamma(b)}{x^b} -
+  \left(x+y\right)^{-b} \sum_{i=0}^{a-1} \frac{\Gamma(b+i)}{i!}
+  \left(\frac{y}{y+x}\right)^i\right).\label{uInteger}
+\end{align}
+
+Equations~\eqref{uGen} and~\eqref{uInteger} are convenient for deriving the Laurent series of $u$ and subsequently, the closed form of~\eqref{GenerateG}. The resulting expression is somewhat involved, so we avoid writing it out here, but it can be found along with all corresponding derivations in~\cite{Dzikowski_2020}.
+
+In table~\ref{tab:GIntTime} we compare the evaluation times of
+the generating integral for different values of parameters $n$, $l$,
+$q$ and $q'$ between the analytical expression given in~\cite{Dzikowski_2020} and a direct numerical integration of~\eqref{GnSchr} with a fixed value of $\delta$. As can be observed from the table the numerical
+evaluation is several orders of magnitude slower than our analytical
+expressions. It is also clear that the evaluation time increases significantly when $n \gg l$. We have found out that in all relevant cases the total evaluation time through analytical expressions is of the order of 0.001-0.1 seconds on Intel 2600k 3.4GHz processor.
+
+\begin{table}[b]
+\centering
+  \begin{tabular}{cc|ccc}
+     Element & Atomic number & Analytic time & Numeric time & $\delta$\\
+    \hline
+    \hline
+    Li & 3 & 3.26 s & 29.3 s & $10^{-3}$\\
+    F & 9 & 14.2 s & 261 s & $10^{-4}$\\
+    Ne & 10 &  29.3 s & 321 s & $10^{-4}$\\
+    \hline 
+  \end{tabular}
+  \caption{Comparison of computational times of second order
+    single-electron correction to ground state energies of some
+    example neutral atoms. The last column shows the value of $\delta$ required to obtain the
+    results accurate to four significant figures.} \label{tab:3}
+\end{table}
+
+ On the other hand, the direct numerical
+integration of the Green's function for some finite values of $\delta$
+becomes very inefficient for large values of $n$ and $l$. This happens due to the increasing number
+of nodes of the integrand, resulting in oscillatory
+behavior. Consequently, the accurate evaluation of the integral
+demands the smaller and smaller values of $\delta$ to keep the
+constant accuracy, since in many cases large positive values are
+almost completely cancelled by large negative values. Therefore, the
+precise result would require a forbiddingly accurate evaluation of the
+integrand at every point. Consequently, the evaluation
+time of some high-$n$ Rydberg states is still large and requires
+further optimization, for example, by expanding the analytic results in an asymptotic series in $n$.
+
+For the purpose of obtaining analytical corrections to hydrogen-like wavefunctions, one also needs to consider the integral moments of the RCGF
+\begin{equation} \label{Gmoment}
+    J_{nl}(\lambda, x') = \int e^{-\lambda x} G_{nl}(x,x')x^{q} dx.
+\end{equation}
+In table~\ref{tab:2} we compare the evaluation time of analytically
+computed integral moments with the numerically computed ones for some
+values of the parameters $q$, $n$, $l$ and $\lambda$. In this
+simulation, we numerically evaluated the integral moments at one
+hundred different values of $r$ in order to compare with an
+analytically calculated curve. As in the situation of the generating
+integral, the evaluation time of the direct numerical integration is a
+few orders of magnitude slower.
+
+We also
+compare a few cases of the second-order single-electron correction evaluation times between our analytical and
+numerical approaches. The result is given in table~\ref{tab:3}. Typically a
+fully sequential version of an ECM program implemented in Mathematica
+requires one order of magnitude larger times for the direct numerical
+evaluation, as compared to the analytical expressions.
+
+\section{The Reduced Dirac-Coulomb Green's function}
+
+The RDCGF can be handled in an analogous way to the RCGF, since~\eqref{Gderiv} is equally valid in the relativistic case. If the relativistic Green's function is expressed in terms of the Dirac hydrogen wavefunctions according to~\eqref{GreenEDirac}, then all that is needed are the derivatives of the Dirac wavefunctions over the principal quantum number $n$. This can be achieved by expressing the Dirac wavefunctions in terms of the Schr\"odinger ones according to~\eqref{Diracwave}. The additional complication however, comes from the fact, that the relativistic calculation requires evaluating the derivatives of the $R_{n,l}$ and $U_{n,l}$ functions at non-integer values of $n$ and $l$, in which case they cannot be expressed as a finite series. In terms of the regularized hypergeometric functions ${}_p\widetilde{F}_q$, we can write:
+\begin{align}
+\partial_{\nu} R_{\nu,\gamma,Z}(r) &= \sqrt{Z q!\Gamma(p+1)}2\frac{e^{-\lambda/2}}{n^2 \lambda} \nonumber
+\\
+&\times\Bigg[\sum_{i=0}^{q}\frac{(-\lambda)^{i}}{i!}\frac{(\lambda)^{\gamma+1}A_i}{(q-i)!\Gamma(i+2\gamma+2)} +\frac{(-1)^qq}{(q+1)!}\frac{p}{\Gamma(p+2)}\frac{(\lambda)^{\nu+1}}{2\nu} \nonumber 
+\\
+&\mspace{180mu}-(-1)^q\lambda^{\nu+2}{}_2\widetilde{F}_2[1,2;q+3,p+3;\lambda]\Bigg], 
+\\
+\partial_{\nu} U_{\nu,\gamma,Z}(r) &= \partial_{\nu} R_{\nu,\gamma,Z}(r)+\sqrt{Z q!\Gamma(p+1)}\frac{2}{n^2 \lambda} \nonumber
+\\
+&\times\Bigg[e^{-\lambda/2}\sum_{i=0}^{q}\frac{(-\lambda)^{i}}{i!}\frac{(\lambda)^{\gamma+1}(\Psi(-1-p)-\Psi(p))}{(q-i)!\Gamma(i+2\gamma+2)} \nonumber 
+\\
+&\mspace{170mu}-(-1)^q e^{\lambda/2}\frac{\Gamma(-p)}{\lambda^{\gamma}}{}_1\widetilde{F}_1[q+1,-2\gamma,-\lambda]\Bigg],
+\end{align}
+where  and we have defined the coefficients:
+\begin{align}
+p=\nu+\gamma, \qquad \qquad q=\nu-\gamma-1, \qquad \qquad \lambda=2rZ/n,
+\\
+  A_i =\frac{\Psi(q)+\Psi(p)}{2}-\Psi(q-i)+\frac{i-1-2\nu}{2\nu}\frac{i}{q+1-i}-\frac{\gamma+2}{\nu}.
+\end{align}
+Note that these formulae assume that $q$ is a non-negative integer, but $p$ isn't, as is always the case when evaluating the Dirac hydrogen-like wavefunctions in terms of the Schr\"odinger ones (see~\eqref{Diracwave}).
+
+The relativistic description also poses a more
+complex dependence on effective charge. Due to the mass term of the
+Dirac equation, it is impossible to separate
+explicitly the dependence of the matrix elements on the effective
+charge. For this reason, results of the D-ECM calculations presented in this thesis focus on the leading-order
+approximation.
+
+%\cite{wong_dirac_1985,swainson_unified_1991}
+

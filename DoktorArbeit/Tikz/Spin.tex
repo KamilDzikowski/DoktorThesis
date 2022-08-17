@@ -1,0 +1,35 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.geometric}
+
+\usepackage{blochsphere}
+
+\begin{document}
+	
+	\newcommand{\AxisRotator}[1][rotate=0]{%
+		\tikz [x=0.05cm,y=0.30cm,line width=.1ex,-stealth,#1] \draw (0,0) arc (-150:150:1 and 1);%
+	}
+	\begin{blochsphere}[radius=1.5 cm,tilt=10,rotation=0,opacity=0]
+		\drawLongitudeCircle {0}
+		\drawSmallCircle {0} {0} {30}
+		\drawSmallCircle {0} {0} {-30}
+		
+		\draw[->,line width=.3mm] (0, 0) -- (1.25, 0.75);
+		\draw[->,line width=.3mm] (0, 0) -- (1.25, -0.75);
+	
+		\draw[dashed,line width=.2mm] (0, -2) -- (0, 2);
+		
+		\node at (0.3,1.9) {\textcolor{blue}{\tiny $S_z$}};
+		\node at (0.3,0.4) {\textcolor{blue}{\tiny $\vec{S}$}};
+		
+		\node at (1.7,0.9) {\textcolor{red}{\tiny $m_s=\frac{1}{2}$}};
+	\node at (1.7,-0.9) {\textcolor{red}{\tiny $m_s=-\frac{1}{2}$}};
+		
+		\draw (0,1.7) node {\AxisRotator[rotate=-90]}; 
+		
+	\end{blochsphere}
+\end{document}
